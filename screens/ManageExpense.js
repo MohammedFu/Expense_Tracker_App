@@ -4,6 +4,7 @@ import IconButton from "../components/UI/IconButton";
 import Button from "../components/UI/Button";
 import { GlobalStyles } from "../constants/styles";
 import { ExpensesContext } from "../store/expense-context";
+import ExpenseForm from "../components/MamageExpense/ExpenseForm";
 
 function ManageExpence({ route, navigation }) {
   const expensesCtx = useContext(ExpensesContext);
@@ -17,12 +18,12 @@ function ManageExpence({ route, navigation }) {
         isEditing ? (
           <View>
             <IconButton
-              icon="close-circle"
-              color={GlobalStyles.colors.error500}
-              size={36}
-              onPress={() => navigation.pop()}
-            />
-          </View>
+            icon="trash-bin"
+            color={GlobalStyles.colors.error500}
+            size={26}
+            onPress={deleteExpenseHandler}
+          />
+          </View>       // if editing, show delete iconButton
         ) : null,       // if not editing, show nothing
     });
   }, [isEditing, navigation]);
@@ -53,20 +54,13 @@ function ManageExpence({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttonContainer}>
         <Button mode={"flat"} onPress={cancelHandler} style={styles.button}>Cancel</Button>
         <Button onPress={confirmHandler} style={styles.button}>{isEditing ? "Update" : "Save"}</Button>
       </View>
-      {isEditing && (
         <View style={styles.deleteContainer}>
-          <IconButton
-            icon="trash-bin"
-            color={GlobalStyles.colors.error500}
-            size={36}
-            onPress={deleteExpenseHandler}
-          />
         </View>
-      )}
     </View>
   );
 }
